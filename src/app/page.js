@@ -30,41 +30,68 @@ export default async function Home() {
   ).length;
 
   return (
-    <main>
-      <h1>Machines de l’usine</h1>
+  <main>
+    <h1>Dashboard de l’usine</h1>
 
-      <p>
-        {machinesEnMarche} machines en marche sur {machines.length}
-      </p>
+    <h2>Machines</h2>
+    <p>
+      {machinesEnMarche} machines en marche sur {machines.length}
+    </p>
 
-      <ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Machine</th>
+          <th>Atelier</th>
+          <th>Statut</th>
+          <th>Rendement</th>
+        </tr>
+      </thead>
+
+      <tbody>
         {machines.map((machine) => (
-          <li key={machine.id}>
-            {machine.name} — {machine.workshop} — {machine.status}
-            {" — Rendement : "}
-            {machine.efficiency === null
-              ? "Non renseigné"
-              : `${machine.efficiency} %`}
-          </li>
+          <tr key={machine.id}>
+            <td>{machine.name}</td>
+            <td>{machine.workshop}</td>
+            <td>{machine.status}</td>
+            <td>
+              {machine.efficiency == null
+                ? "Non renseigné"
+                : `${machine.efficiency} %`}
+            </td>
+          </tr>
         ))}
-      </ul>
+      </tbody>
+    </table>
 
-      <h2>Commandes</h2>
-      <p>{commandesEnRetard} commande(s) en retard</p>
+    <h2>Commandes</h2>
+    <p>{commandesEnRetard} commande(s) en retard</p>
 
-      <ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Commande</th>
+          <th>Client</th>
+          <th>Produit</th>
+          <th>Production</th>
+          <th>Statut</th>
+          <th>Priorité</th>
+        </tr>
+      </thead>
+
+      <tbody>
         {orders.map((order) => (
-          <li key={order.id}>
-            {order.id} — {order.customer} — {order.product}
-            {" — "}
-            {order.produced} / {order.quantity} pièces
-            {" — "}
-            {order.status}
-            {" — Priorité : "}
-            {order.priority ?? "Non renseignée"}
-          </li>
+          <tr key={order.id}>
+            <td>{order.id}</td>
+            <td>{order.customer}</td>
+            <td>{order.product}</td>
+            <td>{order.produced} / {order.quantity}</td>
+            <td>{order.status}</td>
+            <td>{order.priority ?? "Non renseignée"}</td>
+          </tr>
         ))}
-      </ul>
-    </main>
-  );
+      </tbody>
+    </table>
+  </main>
+);
 }
