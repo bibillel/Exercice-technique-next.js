@@ -1,4 +1,6 @@
-export default async function Home() {
+import { Suspense } from "react";
+
+async function Dashboard() {
   const response = await fetch(
     "https://test-api.ad6.com/api/machines",
     { cache: "no-store" }
@@ -94,4 +96,12 @@ export default async function Home() {
     </table>
   </main>
 );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<p>Chargement des données de l’usine…</p>}>
+      <Dashboard />
+    </Suspense>
+  );
 }
