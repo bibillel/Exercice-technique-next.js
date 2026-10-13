@@ -56,6 +56,8 @@ export default async function Home() {
             {order.produced} / {order.quantity} pièces
             {" — "}
             {order.status}
+            {" — Priorité : "}
+            {order.priority ?? "Non renseignée"}
           </li>
         ))}
       </ul>
