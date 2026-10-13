@@ -1,6 +1,9 @@
 export default async function Home() {
   const response = await fetch(
     "https://test-api.ad6.com/api/machines",
+    {
+      cache: "no-store",
+    }
   );
 
   if (!response.ok) {
@@ -8,7 +11,16 @@ export default async function Home() {
   }
 
   const machines = await response.json();
+const ordersResponse = await fetch(
+  "https://test-api.ad6.com/api/orders",
+  { cache: "no-store" }
+);
 
+if (!ordersResponse.ok) {
+  return <p>Impossible de charger les commandes.</p>;
+}
+
+const orders = await ordersResponse.json();
   return (
     <main>
       <h1>Machines de l’usine</h1>
@@ -20,6 +32,19 @@ export default async function Home() {
           </li>
         ))}
       </ul>
+      <h2>Commandes</h2>
+
+<ul>
+  {orders.map((order) => (
+    <li key={order.id}>
+      {order.id} — {order.customer} — {order.product}
+      {" — "}
+      {order.produced} / {order.quantity} pièces
+      {" — "}
+      {order.status}
+    </li>
+  ))}
+</ul>
     </main>
   );
 }
