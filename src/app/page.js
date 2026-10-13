@@ -41,6 +41,10 @@ export default async function Home() {
         {machines.map((machine) => (
           <li key={machine.id}>
             {machine.name} — {machine.workshop} — {machine.status}
+            {" — Rendement : "}
+            {machine.efficiency === null
+              ? "Non renseigné"
+              : `${machine.efficiency} %`}
           </li>
         ))}
       </ul>
