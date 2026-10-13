@@ -10,7 +10,7 @@ export default async function Home() {
     return <p>Impossible de charger les machines.</p>;
   }
 
-  const machines = await response.json();
+const machines = await response.json();
 const ordersResponse = await fetch(
   "https://test-api.ad6.com/api/orders",
   { cache: "no-store" }
@@ -33,9 +33,9 @@ const orders = await ordersResponse.json();
         ))}
       </ul>
       <h2>Commandes</h2>
-
-<ul>
-  {orders.map((order) => (
+      <p>{commandesEnRetard} commande(s) en retard</p>
+    <ul>
+   {orders.map((order) => (
     <li key={order.id}>
       {order.id} — {order.customer} — {order.product}
       {" — "}
@@ -48,3 +48,6 @@ const orders = await ordersResponse.json();
     </main>
   );
 }
+const commandesEnRetard = orders.filter(
+  (order) => order.status === "delayed"
+).length;
